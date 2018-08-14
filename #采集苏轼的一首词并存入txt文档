@@ -1,0 +1,29 @@
+######jupyter notebook下
+
+import requests
+from bs4 import BeautifulSoup
+import re
+import os
+import pandas as pd
+
+url = 'http://www.shicimingju.com/chaxun/list/3710.html'
+r = requests.get(url)
+html = r.text.encode(r.encoding).decode()
+soup = BeautifulSoup(html,'lxml')
+#soup
+
+#正文内容
+content = soup.find('div',attrs ="shici-content").text
+content = re.sub('(\n|\s)','',content)#数据清洗，将空格 换行符等去除掉  使用正则
+#content
+
+#标题内容
+title = soup.find('h1',attrs ="shici-title").text
+#title
+
+#####存储到TXT文档中'
+filedir = os.getcwd() + '/苏轼的词'
+if not os.path.exists(filedir):
+    os.mkdir(filedir)
+with open(filedir + '/%s.txt'%title,mode = 'w',encoding = 'utf-8') as f:
+    f.write(title + '\n' + content)
