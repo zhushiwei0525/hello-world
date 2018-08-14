@@ -1,4 +1,4 @@
-######jupyter notebook下
+######jupyter notebook下采集苏轼的一首词
 
 import requests
 from bs4 import BeautifulSoup
